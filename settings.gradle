@@ -1,1 +1,6 @@
 rootProject.name = 'in-snap-app'
+
+includeBuild("api-gateway")
+includeBuild("discovery-server")
+includeBuild("authorization-server")
+includeBuild("image-service")
