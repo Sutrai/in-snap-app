@@ -43,7 +43,7 @@ public class ConverterToMultipartFile {
             }
 
             @Override
-            public InputStream getInputStream() throws IOException {
+            public InputStream getInputStream() {
                 return new ByteArrayInputStream(bytes);
             }
 

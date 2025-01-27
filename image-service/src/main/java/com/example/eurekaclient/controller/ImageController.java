@@ -1,26 +1,33 @@
 package com.example.eurekaclient.controller;
 
 import com.example.eurekaclient.Util.ImageValidationUtils;
+import com.example.eurekaclient.domain.response.SuccessResponse;
 import com.example.eurekaclient.service.ImageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v1/image/")
+@RequestMapping("1/image/")
 public class ImageController {
 
     private final ImageService imageService;
 
-    @GetMapping("/{imageHash}.{extension}")
-    public ResponseEntity<?> image(@PathVariable String imageHash, @PathVariable String extension){
+    @GetMapping("/{imageHash}")
+    public ResponseEntity<SuccessResponse<?>> imageInfo(@PathVariable String imageHash){
+        return ResponseEntity.ok(SuccessResponse.builder()
+                        .status(200)
+                        .success(true)
+                        .data(imageService.imageInfo(imageHash))
+                        .build());
+    }
 
+    @GetMapping("/{imageHash}.{extension}")
+    public ResponseEntity<?> image(@PathVariable String imageHash){
         byte[] image =  imageService.getImage(imageHash);
 
         return ResponseEntity.ok()
@@ -29,15 +36,24 @@ public class ImageController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> upload(
-            @RequestPart(value = "image", required = false) MultipartFile image,
-            @RequestPart(value = "image", required = false) String imageUrl) throws Exception {
+    public ResponseEntity<SuccessResponse<?>> upload(
+            @RequestParam("image") Object image,
+            @RequestParam("title") String title,
+            @RequestParam("description") String description) {
 
-        if (image != null) {
-            return ResponseEntity.ok(imageService.uploadImage(image));
+        return ResponseEntity.ok(SuccessResponse.builder()
+                        .status(200)
+                        .success(true)
+                        .data(imageService.uploadImage(image, title, description))
+                .build());
+    }
 
-        } else
-            return ResponseEntity.ok(imageService.uploadImage(imageService.downloadFileFromUrl(imageUrl)));
-
+    @DeleteMapping("/{imageHash}")
+    public ResponseEntity<SuccessResponse<?>> deleteImage(@PathVariable String imageHash){
+        return ResponseEntity.ok(SuccessResponse.builder()
+                .status(200)
+                .success(true)
+                .data(imageService.deleteImage(imageHash))
+                .build());
     }
 }

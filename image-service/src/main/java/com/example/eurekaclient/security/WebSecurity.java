@@ -22,7 +22,7 @@ public class WebSecurity {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v2/test").hasRole("USER")
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

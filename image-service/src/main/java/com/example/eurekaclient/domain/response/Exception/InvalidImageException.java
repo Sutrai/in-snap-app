@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 
 @EqualsAndHashCode(callSuper = true)
 public class InvalidImageException extends CommonException {
-    public InvalidImageException(String techMessage) {
-        super(Code.INVALID_IMAGE, "Invalid image provided", techMessage, HttpStatus.BAD_REQUEST);
+    public InvalidImageException(Code code, String techMessage) {
+        super(code, "Invalid image provided", techMessage, HttpStatus.BAD_REQUEST);
     }
 }

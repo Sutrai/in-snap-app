@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Images {
+public class Image {
 
     private String imageHash;
     private Long accountId;

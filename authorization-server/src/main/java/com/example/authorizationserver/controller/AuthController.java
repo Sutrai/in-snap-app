@@ -63,15 +63,15 @@ public class AuthController {
                 .role(Role.USER)
                 .password(passwordEncoder.encode(req.getPassword()))
                 .build();
-        System.out.println(1);
+
         userDetailsManager.createUser(user);
-        System.out.println(2);
+
         Authentication authentication = UsernamePasswordAuthenticationToken.authenticated(
                 user,
                 req.getPassword(),
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
         );
-        System.out.println(3);
+
         return ResponseEntity.ok(tokenGenerator.createToken(authentication));
     }
 

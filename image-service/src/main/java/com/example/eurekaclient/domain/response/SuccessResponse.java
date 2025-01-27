@@ -13,5 +13,7 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SuccessResponse<T> implements Response {
 
+    private int status;
+    private boolean success;
     private T data;
 }
