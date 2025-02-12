@@ -1,14 +1,13 @@
 package com.oous.authorizationserver.security;
 
 import com.oous.authorizationserver.domain.constant.Code;
-import com.oous.authorizationserver.domain.response.exception.CommonException;
+import com.oous.authorizationserver.domain.response.exception.information.AuthenticationException;
 import com.oous.authorizationserver.filter.JwtAuthenticationFilter;
 import com.oous.authorizationserver.util.KeyUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -108,12 +107,7 @@ public class WebSecurity {
 
             } catch (io.jsonwebtoken.ExpiredJwtException e) {
 
-                throw CommonException.builder()
-                        .code(Code.UNAUTHORIZED)
-                        .error("Invalid refresh token")
-                        .techMessage(e.getLocalizedMessage())
-                        .httpStatus(HttpStatus.BAD_REQUEST)
-                        .build();
+                throw AuthenticationException.builder("error.authentication.invalid_token").build();
             }
         };
     }

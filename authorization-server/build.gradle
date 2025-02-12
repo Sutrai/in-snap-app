@@ -27,6 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.security:spring-security-oauth2-jose:5.8.0'
 	implementation "org.springframework.boot:spring-boot-starter-oauth2-authorization-server"
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
@@ -40,6 +41,8 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 	implementation 'org.json:json:20231013'
+	implementation 'jakarta.mail:jakarta.mail-api:2.1.0'
+	implementation 'ru.dlabs71.library:d-email:latest.release'
 
 }
 

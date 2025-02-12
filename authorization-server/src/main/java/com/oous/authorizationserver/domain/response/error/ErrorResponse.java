@@ -10,6 +10,7 @@ import lombok.Builder;
 public class ErrorResponse implements Response{
 
     private Data data;
+    private boolean informative;
     private boolean success;
     private int status;
 

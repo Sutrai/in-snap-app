@@ -50,6 +50,8 @@ public class AuthController {
 
     @PostMapping("/registration")
     public ResponseEntity<Response> registration(@RequestBody RegistrationReq req){
+        validator.validationRequest(req);
+
         User user = User.builder()
                 .nickname(req.getNickname())
                 .email(req.getEmail())

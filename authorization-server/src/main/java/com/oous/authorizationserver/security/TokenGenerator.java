@@ -1,15 +1,13 @@
 package com.oous.authorizationserver.security;
 
 import com.oous.authorizationserver.domain.api.common.AuthenticationResp;
-import com.oous.authorizationserver.domain.constant.Code;
 import com.oous.authorizationserver.domain.entity.User;
-import com.oous.authorizationserver.domain.response.exception.CommonException;
+import com.oous.authorizationserver.domain.response.exception.information.InvalidCredentialsException;
 import com.oous.authorizationserver.util.KeyUtils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -19,7 +17,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.Date;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -65,13 +62,7 @@ public class TokenGenerator {
 
     public AuthenticationResp createToken(Authentication authentication) {
         if (!(authentication.getPrincipal() instanceof User user)) {
-            log.error("Invalid credentials provided. Principal is not of User type: {}", authentication.getPrincipal().getClass());
-            throw CommonException.builder()
-                    .code(Code.INVALID_CREDENTIALS)
-                    .error("Invalid credentials provided.")
-                    .techMessage(String.format("Principal %s is not of User type", authentication.getPrincipal().getClass()))
-                    .httpStatus(HttpStatus.BAD_REQUEST)
-                    .build();
+            throw InvalidCredentialsException.builder("error.invalid.credentials").build();
         }
 
         log.info("Creating tokens for user: {}", user.getUsername());

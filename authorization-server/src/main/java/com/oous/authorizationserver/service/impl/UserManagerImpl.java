@@ -2,7 +2,7 @@ package com.oous.authorizationserver.service.impl;
 
 import com.oous.authorizationserver.domain.constant.Code;
 import com.oous.authorizationserver.domain.entity.User;
-import com.oous.authorizationserver.domain.response.exception.CommonException;
+import com.oous.authorizationserver.domain.response.exception.information.UserAlreadyExistsException;
 import com.oous.authorizationserver.repository.UserRepository;
 import com.oous.authorizationserver.service.UserManager;
 import com.oous.authorizationserver.util.ValidationUtils;
@@ -26,14 +26,9 @@ public class UserManagerImpl implements UserDetailsManager, UserManager {
     public void createUser(UserDetails user) {
         log.info("Attempting to create user with username: {}", user.getUsername());
 
-        if (userRepository.existsByNickname(user.getUsername())) {
+        if (userRepository.existsByEmail(user.getUsername())) {
             log.info("User with nickname '{}' already exists", user.getUsername());
-            throw CommonException.builder()
-                    .code(Code.USER_ALREADY_EXISTS)
-                    .error("A user with this nickname already exists")
-                    .techMessage("Nickname uniqueness check failed")
-                    .httpStatus(HttpStatus.CONFLICT)
-                    .build();
+            throw UserAlreadyExistsException.builder("error.user.already.exists").build();
         }
 
         log.info("Validating user details for username: {}", user.getUsername());
@@ -59,9 +54,9 @@ public class UserManagerImpl implements UserDetailsManager, UserManager {
     }
 
     @Override
-    public boolean userExists(String username) {
-        log.debug("Checking if user exists with username: {}", username);
-        return userRepository.existsByNickname(username);
+    public boolean userExists(String nickname) {
+        log.debug("Checking if user exists with nickname: {}", nickname);
+        return userRepository.existsByEmail(nickname);
     }
 
     @Override

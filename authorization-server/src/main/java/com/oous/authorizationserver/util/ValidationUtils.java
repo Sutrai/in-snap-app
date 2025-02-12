@@ -1,7 +1,7 @@
 package com.oous.authorizationserver.util;
 
 import com.oous.authorizationserver.domain.constant.Code;
-import com.oous.authorizationserver.domain.response.exception.CommonException;
+import com.oous.authorizationserver.domain.response.exception.information.InvalidCredentialsException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +28,7 @@ public class ValidationUtils {
 
             log.info("Validation failed: {}", resultValidation);
 
-            throw CommonException.builder()
-                    .code(Code.REQUEST_VALIDATION_ERROR)
-                    .techMessage(resultValidation)
-                    .httpStatus(HttpStatus.OK)
-                    .build();
+            throw InvalidCredentialsException.builder("validation.error.message").build();
 
         } else log.info("Validation successful for request: {}", req);
 
