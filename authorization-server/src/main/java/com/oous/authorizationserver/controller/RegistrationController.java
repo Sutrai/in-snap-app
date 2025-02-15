@@ -2,6 +2,7 @@ package com.oous.authorizationserver.controller;
 
 import com.oous.authorizationserver.domain.api.registration.RegistrationReq;
 import com.oous.authorizationserver.service.RegistrationService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,5 +20,10 @@ public class RegistrationController {
     @PostMapping("/init")
     public void registerNewUser(@RequestBody RegistrationReq req, HttpServletResponse response){
         registrationService.register(req, response);
+    }
+
+    @PostMapping("/confirm")
+    public void checkOtp(String otp, HttpServletRequest request){
+        registrationService.checkOtp(otp, request);
     }
 }

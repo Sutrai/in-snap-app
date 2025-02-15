@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class RedisRegistrationStore implements RegistrationStore {
 
-    private final static String SESSION_ID_TO_REG_DATA = "registration_store:session_id_to_reg_data:";
+    private static final String SESSION_ID_TO_REG_DATA = "registration_store:session_id_to_reg_data:";
 
     private final int expiresIn;
     private final StringRedisTemplate redisTemplate;
@@ -34,7 +34,8 @@ public class RedisRegistrationStore implements RegistrationStore {
     @Override
     public RegistrationReq take(String sessionId) throws JsonProcessingException {
         String stringDto = store.getAndDelete(SESSION_ID_TO_REG_DATA + sessionId);
-        if (stringDto == null) return null;
+
+        // TODO добавить шифрование пороля при сохранении в redis
 
         return objectMapper.readValue(stringDto, RegistrationReq.class);
     }

@@ -1,13 +1,12 @@
 package com.oous.authorizationserver.repository;
 
-import com.oous.authorizationserver.domain.entity.User;
+import com.oous.authorizationserver.domain.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.UUID;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-
-    Optional<User> findByNickname(String email);
-    boolean existsByEmail(String email);
-
+@Repository
+public interface UserRepository extends JpaRepository<UserEntity, UUID> {
+    Boolean existsByEmail(String email);
 }

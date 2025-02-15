@@ -28,7 +28,7 @@ public class ValidationUtils {
 
             log.info("Validation failed: {}", resultValidation);
 
-            throw InvalidCredentialsException.builder("validation.error.message").build();
+            throw new InvalidCredentialsException("validation.error.message");
 
         } else log.info("Validation successful for request: {}", req);
 
