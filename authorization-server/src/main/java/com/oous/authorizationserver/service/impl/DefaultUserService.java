@@ -25,6 +25,7 @@ public class DefaultUserService implements UserService {
         user.setEmail(req.getEmail());
         user.getRoles().add(roleRepository.getDefaultRole());
         user.setActive(true);
+        user.setPasswordHash(req.getPassword());
         user.setAdmin(false);
         user.setSuperuser(false);
 

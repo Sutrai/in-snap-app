@@ -7,12 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
-
 @Data
 @Entity
-@Table(name = "users")
 @Setter
+@Table(schema = "sso", name = "users")
 public class UserEntity {
 
     @Id
@@ -39,9 +37,13 @@ public class UserEntity {
     private Boolean superuser;
 
     @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "user_roles",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id")
+    @JoinTable(schema = "sso", name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     public List<RoleEntity> roles = new ArrayList<>();
 }
+
+
+
+

@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "roles")
+@Table(schema = "sso", name = "roles")
 public class RoleEntity {
 
     @Id
@@ -28,4 +30,10 @@ public class RoleEntity {
 
     @Column(name = "active", nullable = false)
     private Boolean active;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(schema = "sso", name = "role_authorities",
+        joinColumns = @JoinColumn(name = "role_id"),
+        inverseJoinColumns = @JoinColumn(name = "authority_id"))
+    private List<AuthorityEntity> authorities = new ArrayList<>();
 }
