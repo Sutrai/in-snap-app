@@ -1,0 +1,42 @@
+server:
+  port: 8082
+  error:
+    include-stacktrace: always
+
+spring:
+  application:
+    name: authorization-server
+
+  datasource:
+    driver: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+e-mail:
+  host: smtp.mail.ru
+  port: 465
+  username: ${MAIL_USERNAME}
+  password: ${MAIL_PASSWORD}
+  protocol: smtp
+  properties:
+    mail.smtp.auth: true
+    mail.smtp.ssl.enable: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.web: DEBUG
+    org.springframework.security.config: DEBUG
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+
+otp-store:
+  cookie-name: oous-sso-temporary-session
+  cookie-domain: localhost
+  cookie-max-age: 180
