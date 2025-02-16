@@ -12,7 +12,6 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Builder
 public class AuthorizedUser extends User implements OAuth2User {
 
     private UUID id;

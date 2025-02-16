@@ -16,6 +16,10 @@ import org.springframework.util.StringUtils;
 
 import java.util.*;
 
+/*
+ * Класс OAuth2PasswordAuthenticationConverter реализует интерфейс AuthenticationConverter
+ * и отвечает за преобразование HTTP-запроса в объект аутентификации для типа grant_type=password.
+ */
 public class OAuth2PasswordAuthenticationConverter implements AuthenticationConverter {
 
     private static final String ACCESS_TOKEN_REQUEST_ERROR_URI =

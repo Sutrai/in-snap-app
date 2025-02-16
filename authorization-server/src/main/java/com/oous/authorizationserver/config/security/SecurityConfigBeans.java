@@ -26,7 +26,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 
 @RequiredArgsConstructor
 @Configuration(proxyBeanMethods = false)
-public class SecurityConfigUtilities {
+public class SecurityConfigBeans {
 
     private final AuthorizationServerProperties authorizationServerProperties;
     private final UserClientService userClientService;

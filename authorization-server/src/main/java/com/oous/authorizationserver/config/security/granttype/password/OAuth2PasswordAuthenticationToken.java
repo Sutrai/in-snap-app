@@ -8,6 +8,14 @@ import org.springframework.security.oauth2.server.authorization.authentication.O
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Класс OAuth2PasswordAuthenticationToken представляет собой объект аутентификации
+ * для типа grant_type=password в OAuth 2.0. Этот токен используется для передачи
+ * учетных данных пользователя (username и password) и других параметров в процессе
+ * аутентификации.
+  * Наследуется от OAuth2AuthorizationGrantAuthenticationToken, который является базовым
+ * классом для всех типов аутентификации, связанных с OAuth 2.0.
+ */
 @Getter
 public class OAuth2PasswordAuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
 

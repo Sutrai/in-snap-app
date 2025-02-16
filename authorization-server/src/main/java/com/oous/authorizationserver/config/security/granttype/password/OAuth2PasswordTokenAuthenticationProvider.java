@@ -25,6 +25,12 @@ import java.util.UUID;
 
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ERROR_URI;
 
+/**
+ * Класс OAuth2PasswordTokenAuthenticationProvider реализует интерфейс AuthenticationProvider
+ * и отвечает за аутентификацию и генерацию токенов для типа grant_type=password в OAuth 2.0.
+ * Этот класс обрабатывает запросы на аутентификацию с использованием учетных данных пользователя
+ * (username и password) и выдает access token и refresh token.
+ */
 @Slf4j
 @RequiredArgsConstructor
 public class OAuth2PasswordTokenAuthenticationProvider implements AuthenticationProvider {
@@ -37,6 +43,7 @@ public class OAuth2PasswordTokenAuthenticationProvider implements Authentication
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         OAuth2PasswordAuthenticationToken passwordAuthentication = (OAuth2PasswordAuthenticationToken) authentication;
 
+        // Регистрация самого клиента
         OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClient(passwordAuthentication);
         RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 
@@ -44,6 +51,7 @@ public class OAuth2PasswordTokenAuthenticationProvider implements Authentication
             throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_CLIENT);
         }
 
+        // Аутентифицируем пользователя с помощью AuthenticationManager
         Authentication userAuthentication = this.authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                     passwordAuthentication.getUsername(),
@@ -63,6 +71,7 @@ public class OAuth2PasswordTokenAuthenticationProvider implements Authentication
         authorizationService.save(authorization);
 
         Authentication principal = authorization.getAttribute(Principal.class.getName());
+        // Создаем контекст для генерации токенов
         DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
                 .registeredClient(registeredClient)
                 .principal(principal)
@@ -77,7 +86,6 @@ public class OAuth2PasswordTokenAuthenticationProvider implements Authentication
         OAuth2AccessToken accessToken = this.generateAndSetAccessToken(tokenContextBuilder, authorizationBuilder);
 
         OAuth2RefreshToken refreshToken = null;
-
         if (registeredClient.getClientAuthenticationMethods().contains(AuthorizationGrantType.REFRESH_TOKEN)){
             refreshToken = this.generateAndSetRefreshToken(tokenContextBuilder, authorizationBuilder);
         }
@@ -149,11 +157,19 @@ public class OAuth2PasswordTokenAuthenticationProvider implements Authentication
         return null;
     }
 
+    // Метод supports проверяет, поддерживает ли данный провайдер указанный тип аутентификации.
     @Override
     public boolean supports(Class<?> authentication) {
-        return false;
+        return OAuth2ClientAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
+    /**
+     * Метод getAuthenticatedClient извлекает аутентифицированного клиента из объекта аутентификации.
+     *
+     * @param authentication Объект аутентификации
+     * @return Аутентифицированный клиент
+     * @throws OAuth2AuthenticationException Если клиент не аутентифицирован
+     */
     private OAuth2ClientAuthenticationToken getAuthenticatedClient(Authentication authentication) {
         OAuth2ClientAuthenticationToken clientPrincipal = null;
         if (OAuth2ClientAuthenticationToken.class.isAssignableFrom(authentication.getPrincipal().getClass())) {
