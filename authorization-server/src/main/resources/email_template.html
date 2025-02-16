@@ -1,0 +1,83 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение Email</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #e8f4f8;
+            font-family: Arial, sans-serif;
+        }
+        .email-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #181a1b;
+            text-align: center;
+            border-radius: 12px;
+        }
+        .email-header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 20px;
+        }
+        .email-body {
+            font-size: 16px;
+            color: #ffffff;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+        .otp-code {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4a90e2;
+            margin: 30px 0;
+            padding: 15px;
+            background-color: #181a1b;
+            border: 2px solid #cccccc;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        .email-footer {
+            font-size: 14px;
+            color: #cccccc;
+            margin-top: 20px;
+        }
+        .header-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+    <tr>
+        <td align="center" valign="middle" style="padding: 40px 0;">
+            <div class="email-container">
+
+                <img src="https://github.com/user-attachments/assets/f23df655-a51e-4cba-88ca-c9adadd35bde" alt="In'snap Header" class="header-image">
+                <div class="email-header">Подтверждение вашего Email</div>
+                <div class="email-body">
+                    Спасибо за регистрацию в нашем сервисе! Для завершения процесса регистрации, пожалуйста, используйте следующий одноразовый код (OTP):
+                </div>
+                <div class="otp-code">{otp_code}</div>
+                <div class="email-body">
+                    Этот код действителен в течение 10 минут. Если вы не запрашивали этот код, пожалуйста, проигнорируйте это письмо или свяжитесь с нашей службой поддержки.
+                </div>
+                <div class="email-footer">
+                    С уважением,<br>
+                    <strong>IN'SNAP</strong>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
