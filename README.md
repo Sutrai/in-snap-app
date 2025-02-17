@@ -2,7 +2,6 @@
 
 # IN'SNAP
 
-🚨🚨🚨 **Warning!** 🚨🚨🚨
 
 This project is a **pet project only** and is highly **not recommended** for use, downloading, or even studying its code.
 
